@@ -1,15 +1,23 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import * as screens from './screens';
 
-const {Navigator, Screen} = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default () => {
   return (
-    <NavigationContainer>
-      <Navigator>
-        <Screen name="Home" component={() => null} />
-      </Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={'Home'}>
+      {Object.keys(screens).map((screenName, index) => (
+        <Stack.Screen
+          key={index}
+          name={screenName}
+          component={screens[screenName]}
+        />
+      ))}
+    </Stack.Navigator>
   );
 };
