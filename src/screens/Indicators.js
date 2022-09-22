@@ -67,7 +67,6 @@ export const Indicators = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 44,
     flex: 1,
   },
   centerCont: {
