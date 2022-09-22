@@ -3,6 +3,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as screens from './screens';
 
 const Stack = createNativeStackNavigator();
+const screenTitles = {
+  Indicators: 'Indicadores',
+  IndicatorDetail: 'Detalles',
+};
 
 export default () => {
   return (
@@ -11,6 +15,7 @@ export default () => {
         <Stack.Screen
           key={index}
           name={screenName}
+          options={{title: screenTitles[screenName]}}
           component={screens[screenName]}
         />
       ))}
