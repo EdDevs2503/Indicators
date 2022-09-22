@@ -6,6 +6,7 @@ import {SearchBar} from '@ant-design/react-native';
 import {useGetData} from '../hooks/useGetData';
 import Fuse from 'fuse.js';
 import {useNavigation} from '@react-navigation/native';
+import {IndicatorsList} from '../components';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -55,19 +56,9 @@ export const Indicators = () => {
         </View>
       )}
       {!isLoading && (
-        <FlatList
+        <IndicatorsList
           data={toSearch ? searchedData : dataReadyToUse}
-          keyExtractor={(_, index) => String(index)}
-          renderItem={({item}) => (
-            <Item
-              extra={
-                <IconOutline name="right-circle" size={24} color="#1890ff" />
-              }
-              onPress={toIndicatorDetail}>
-              {item.nombre}
-              <Brief>{item.unidad_medida}</Brief>
-            </Item>
-          )}
+          onPress={toIndicatorDetail}
         />
       )}
     </View>
