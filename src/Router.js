@@ -6,11 +6,7 @@ const Stack = createNativeStackNavigator();
 
 export default () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName={'Home'}>
+    <Stack.Navigator initialRouteName={'Indicators'}>
       {Object.keys(screens).map((screenName, index) => (
         <Stack.Screen
           key={index}
