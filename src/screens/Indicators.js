@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useMemo} from 'react';
-import {View, Keyboard, StatusBar, StyleSheet, FlatList} from 'react-native';
+import {View, Keyboard, StatusBar, StyleSheet, ScrollView} from 'react-native';
 import {List, ActivityIndicator} from '@ant-design/react-native';
-import {IconOutline} from '@ant-design/icons-react-native';
 import {SearchBar} from '@ant-design/react-native';
 import {useGetData} from '../hooks/useGetData';
 import Fuse from 'fuse.js';
@@ -35,12 +34,23 @@ export const Indicators = () => {
     });
     return fuse.search(toSearch).map(result => result.item);
   }, [dataReadyToUse, toSearch]);
-  const toIndicatorDetail = useCallback(() => {
-    navigation.navigate('IndicatorDetail');
-  }, [navigation]);
-
+  const toIndicatorDetail = useCallback(
+    indicator => {
+      navigation.navigate('IndicatorDetail', {
+        indicator,
+      });
+    },
+    [navigation],
+  );
+  if (isLoading) {
+    return (
+      <View style={styles.centerCont}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <StatusBar animated={true} barStyle={'dark-content'} />
       <SearchBar
         value={toSearch}
@@ -50,24 +60,18 @@ export const Indicators = () => {
         onChange={setToSearch}
         disabled={isLoading || dataReadyToUse.length === 0}
       />
-      {isLoading && (
-        <View style={styles.centerCont}>
-          <ActivityIndicator />
-        </View>
-      )}
-      {!isLoading && (
-        <IndicatorsList
-          data={toSearch ? searchedData : dataReadyToUse}
-          onPress={toIndicatorDetail}
-        />
-      )}
-    </View>
+      <IndicatorsList
+        data={toSearch ? searchedData : dataReadyToUse}
+        onPress={toIndicatorDetail}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // paddingBottom: 10
   },
   centerCont: {
     justifyContent: 'center',

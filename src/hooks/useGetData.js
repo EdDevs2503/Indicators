@@ -6,8 +6,10 @@ export const useGetData = url => {
   const [data, setData] = useState(null);
 
   const makeRequest = useCallback(async () => {
-    const result = await axios.get(url);
-    return result.data;
+    if (url) {
+      const result = await axios.get(url);
+      return result.data;
+    }
   }, [url]);
 
   useEffect(() => {
